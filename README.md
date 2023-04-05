@@ -10,17 +10,17 @@ bpy.types.Scene.prop_01 = BoolProperty(name="Checkbox_1", default = False)
 bpy.types.Scene.prop_02 = BoolProperty(name="Checkbox_2", default = False)
 
 class TestPanel(bpy.types.Panel):
-    bl_label = "Data Augmentation"
+    bl_label = "Panel"
     bl_idname = "PT_TestPanel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'Data Augmentation'
+    bl_category = 'Panel'
    
     def draw(self, context):
         layout = self.layout
         scene = context.scene
         box = layout.box()
-        box.label(text= "Selecionar Classe", icon= 'FILE_FOLDER')
+        box.label(text= "Select checkbox", icon= 'FILE_FOLDER')
         box.prop(scene, "prop_00")
         box.prop(scene, "prop_01")
         box.prop(scene, "prop_02")
