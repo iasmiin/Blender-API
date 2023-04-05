@@ -5,9 +5,9 @@
 import bpy
 from bpy.props import BoolProperty
 
-bpy.types.Scene.prop_00 = BoolProperty(name="Arruela", default = False)
-bpy.types.Scene.prop_01 = BoolProperty(name="Parafuso", default = False)
-bpy.types.Scene.prop_02 = BoolProperty(name="Porca", default = False)
+bpy.types.Scene.prop_00 = BoolProperty(name="Checkbox_1", default = False)
+bpy.types.Scene.prop_01 = BoolProperty(name="Checkbox_2", default = False)
+bpy.types.Scene.prop_02 = BoolProperty(name="Checkbox_3", default = False)
 
 class TestPanel(bpy.types.Panel):
     bl_label = "Data Augmentation"
