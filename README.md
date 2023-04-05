@@ -1,5 +1,5 @@
 # Blender-API
-# Implementing checkboxes:
+## Implementing checkboxes:
 
 ```
 import bpy
@@ -25,11 +25,7 @@ class TestPanel(bpy.types.Panel):
         box.prop(scene, "prop_01")
         box.prop(scene, "prop_02")
 
-#Teste simples com as checkboxes
-if bpy.context.scene.prop_00 == True:
-    bpy.context.scene.render.filepath = 'C:/Users/iasmi/Downloads/b/image_####_test.png'
-else:
-    bpy.context.scene.render.filepath = 'C:/Users/iasmi/Downloads/a/image_####_test.png'       
+# Use bpy.context.scene.prop_00 to assign any condition to the checkboxes.
 
 def register():
     bpy.utils.register_class(TestPanel)
