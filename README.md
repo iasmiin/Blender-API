@@ -10,7 +10,7 @@ collection = bpy.data.collections.new('DEMO')
 # renames the collection to "Data Collection"
 collection.name = 'Data Collection'
 
-# links the new collection to the master collection using the bpy.context.scene.collection.children.link()
+# links the new collection to the master collection using the bpy.context.scene.collection.children.link() method
 # (the new collection will be visible in the Outliner and can be used to organize objects in the scene)
 bpy.context.scene.collection.children.link(collection)
 ```
