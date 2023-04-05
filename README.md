@@ -1,5 +1,5 @@
 # Blender-API
-## Creating a collection
+## Collections
 
 ```
 import bpy
