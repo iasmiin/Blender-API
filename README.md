@@ -2,6 +2,7 @@
 ## Implementing a language selection feature:
 
 ```
+# The language selection in this code allows the user to switch between English and Portuguese translations of the text displayed in the user interface of the Blender add-on
 import bpy
 
 class TestPanel(bpy.types.Panel):
@@ -11,7 +12,8 @@ class TestPanel(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = 'Panel'
 
-    # Define the words in English and Portuguese
+    # The words in English and Portuguese are stored on a dictionary called 'words'
+    # Each word that needs to be translated is a key in the dictionary, and the values associated with each key are dictionaries that contain the translations for that key in English and Portuguese
     words = {
         "Import Part": {"en": "Import Part", "pt": "Importar Peça"},
         "STL File": {"en": "STL File", "pt": "Arquivo .stl"},
@@ -37,12 +39,15 @@ class TestPanel(bpy.types.Panel):
         layout.separator()
 
         # Add the language selection buttons
+        # The button checks the current language setting of the WindowManager object and displays the appropriate text for the opposite language
+        # When the user clicks the button, it executes an operator wm.set_language that sets the WindowManager.language property to either "en" or "pt"
         row = layout.row()
         if bpy.context.window_manager.language == "en":
             row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "pt"
         else:
             row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
 
+# Register the panel and set the custom properties 'language selection' and 'part name'
 def register():
     bpy.utils.register_class(TestPanel)
     bpy.types.WindowManager.language = bpy.props.StringProperty(default="en")
