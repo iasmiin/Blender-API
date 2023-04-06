@@ -1,7 +1,7 @@
 # Blender-API
 ## Implementing a language selection feature:
 
-### Language selection using dictionary: 
+### → Language selection using dictionary: 
 ```
 # The language selection in this code allows the user to switch between English and Portuguese translations of the text displayed in the user interface of the Blender add-on
 
@@ -77,7 +77,7 @@ def unregister():
 if __name__ == "__main__":
     register()
 ```
-### Language selection using lists: 
+### → Language selection using lists: 
 ```
 import bpy
 
