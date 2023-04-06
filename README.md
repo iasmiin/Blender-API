@@ -16,8 +16,6 @@ class TestPanel(bpy.types.Panel):
         "Import Part": {"en": "Import Part", "pt": "Importar Peça"},
         "STL File": {"en": "STL File", "pt": "Arquivo .stl"},
         "Part Name": {"en": "Part Name", "pt": "Nome da Peça"},
-        "Render": {"en": "Render", "pt": "Renderizar"},
-        "Animation Render": {"en": "Animation Render", "pt": "Renderizar Animação"},
         "English": {"en": "English", "pt": "Inglês"},
         "Portuguese": {"en": "Portuguese", "pt": "Português"}
     }
@@ -37,12 +35,6 @@ class TestPanel(bpy.types.Panel):
         row.prop(scene, "part_name", text="")
 
         layout.separator()
-
-        box = layout.box()
-        box.label(text=self.words["Render"][bpy.context.window_manager.language], icon='RENDER_STILL')
-        props = box.operator("render.render", text=self.words["Animation Render"][bpy.context.window_manager.language])
-        props.animation = True
-        props.use_viewport = True
 
         # Add the language selection buttons
         row = layout.row()
