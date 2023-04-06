@@ -19,9 +19,9 @@ class TestPanel(bpy.types.Panel):
     # The words in English and Portuguese are stored on a dictionary called 'words'
     # Each word that needs to be translated is a key in the dictionary, and the values associated with each key are dictionaries that contain the translations for that key in English and Portuguese
     words = {
-        "Import Part": {"en": "Import Part", "pt": "Importar Peça"},
+        "Import Model": {"en": "Import Model", "pt": "Importar Modelo"},
         "STL File": {"en": "STL File", "pt": "Arquivo .stl"},
-        "Part Name": {"en": "Part Name", "pt": "Nome da Peça"},
+        "Model Name": {"en": "Model Name", "pt": "Nome do Modelo"},
         "English": {"en": "English", "pt": "Inglês"},
         "Portuguese": {"en": "Portuguese", "pt": "Português"}
     }
@@ -31,14 +31,14 @@ class TestPanel(bpy.types.Panel):
         scene = context.scene
 
         box = layout.box()
-        box.label(text=self.words["Import Part"][bpy.context.window_manager.language], icon='IMPORT')
+        box.label(text=self.words["Import Model"][bpy.context.window_manager.language], icon='IMPORT')
         box.operator("import_mesh.stl", text=self.words["STL File"][bpy.context.window_manager.language])
 
         layout.separator()
         
         row = layout.row()
-        row.label(text=self.words["Part Name"][bpy.context.window_manager.language])
-        row.prop(scene, "part_name", text="")
+        row.label(text=self.words["Model Name"][bpy.context.window_manager.language])
+        row.prop(scene, "model_name", text="")
 
         layout.separator()
         
@@ -67,7 +67,7 @@ def register():
     bpy.utils.register_class(TestPanel)
     bpy.utils.register_class(SetLanguageOperator)
     bpy.types.WindowManager.language = bpy.props.StringProperty(default="en")
-    bpy.types.Scene.part_name = bpy.props.StringProperty(name="Part Name")
+    bpy.types.Scene.model_name = bpy.props.StringProperty(name="Model Name")
 
 def unregister():
     bpy.utils.unregister_class(TestPanel)
@@ -88,11 +88,9 @@ class TestPanel(bpy.types.Panel):
     bl_region_type = 'UI'
     bl_category = 'Panel'
 
-    # English words for the panel
     ENGLISH_WORDS = [
         "Import Model", "STL File", "Model Name"
     ]
-    # Portuguese words for the panel
     PORTUGUESE_WORDS = [
         "Importar Modelo", "Arquivo .stl", "Nome do modelo:"
     ]
