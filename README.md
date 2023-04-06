@@ -5,19 +5,17 @@
 import bpy
 
 class TestPanel(bpy.types.Panel):
-    bl_label = "Data Augmentation"
+    bl_label = "Panel"
     bl_idname = "PT_TestPanel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
-    bl_category = 'Data Augmentation'
+    bl_category = 'Panel'
 
     # Define the words in English and Portuguese
     words = {
         "Import Part": {"en": "Import Part", "pt": "Importar Peça"},
         "STL File": {"en": "STL File", "pt": "Arquivo .stl"},
-        "WRL File": {"en": "WRL File", "pt": "Arquivo .wrl"},
-        "PLY File": {"en": "PLY File", "pt": "Arquivo .ply"},
-        "Apply Transformation": {"en": "Apply Transformation", "pt": "Aplicar Transformação"},
+        "Part Name": {"en": "Part Name", "pt": "Nome da Peça"},
         "Render": {"en": "Render", "pt": "Renderizar"},
         "Animation Render": {"en": "Animation Render", "pt": "Renderizar Animação"},
         "English": {"en": "English", "pt": "Inglês"},
@@ -27,18 +25,16 @@ class TestPanel(bpy.types.Panel):
     def draw(self, context):
         layout = self.layout
         scene = context.scene
-        obj = context.object
 
         box = layout.box()
         box.label(text=self.words["Import Part"][bpy.context.window_manager.language], icon='IMPORT')
         box.operator("import_mesh.stl", text=self.words["STL File"][bpy.context.window_manager.language])
-        box.operator("import_scene.x3d", text=self.words["WRL File"][bpy.context.window_manager.language])
-        box.operator("import_mesh.ply", text=self.words["PLY File"][bpy.context.window_manager.language])
 
         layout.separator()
-
-        box = layout.box()
-        box.label(text=self.words["Apply Transformation"][bpy.context.window_manager.language], icon='MOD_LINEART')
+        
+        row = layout.row()
+        row.label(text=self.words["Part Name"][bpy.context.window_manager.language])
+        row.prop(scene, "part_name", text="")
 
         layout.separator()
 
@@ -52,15 +48,13 @@ class TestPanel(bpy.types.Panel):
         row = layout.row()
         if bpy.context.window_manager.language == "en":
             row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "pt"
-            row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language])
         else:
-            row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "en"
-            row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language])
-
+            row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
 
 def register():
     bpy.utils.register_class(TestPanel)
     bpy.types.WindowManager.language = bpy.props.StringProperty(default="en")
+    bpy.types.Scene.part_name = bpy.props.StringProperty(name="Part Name")
 
 def unregister():
     bpy.utils.unregister_class(TestPanel)
