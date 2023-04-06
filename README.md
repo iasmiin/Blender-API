@@ -3,15 +3,18 @@
 
 ```
 # The language selection in this code allows the user to switch between English and Portuguese translations of the text displayed in the user interface of the Blender add-on
-import bpy
 
+import bpy
+from bpy.types import Operator
+
+# Define a custom panel class
 class TestPanel(bpy.types.Panel):
     bl_label = "Panel"
-    bl_idname = "PT_TestPanel"
+    bl_idname = "VIEW3D_PT_TestPanel"
     bl_space_type = 'VIEW_3D'
     bl_region_type = 'UI'
     bl_category = 'Panel'
-
+    
     # The words in English and Portuguese are stored on a dictionary called 'words'
     # Each word that needs to be translated is a key in the dictionary, and the values associated with each key are dictionaries that contain the translations for that key in English and Portuguese
     words = {
@@ -37,7 +40,7 @@ class TestPanel(bpy.types.Panel):
         row.prop(scene, "part_name", text="")
 
         layout.separator()
-
+        
         # Add the language selection buttons
         # The button checks the current language setting of the WindowManager object and displays the appropriate text for the opposite language
         # When the user clicks the button, it executes an operator wm.set_language that sets the WindowManager.language property to either "en" or "pt"
@@ -47,16 +50,28 @@ class TestPanel(bpy.types.Panel):
         else:
             row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
 
-# Register the panel and set the custom properties 'language selection' and 'part name'
+# Define a custom operator class for setting the UI language
+class SetLanguageOperator(Operator):
+    bl_idname = "wm.set_language"
+    bl_label = "Set Language"
+    language: bpy.props.StringProperty()
+    
+    # Set the language in the window manager
+    def execute(self, context):
+        bpy.context.window_manager.language = self.language
+        return {'FINISHED'}
+
+# Register the panel and the operator and set the custom properties 'language selection' and 'part name'
 def register():
     bpy.utils.register_class(TestPanel)
+    bpy.utils.register_class(SetLanguageOperator)
     bpy.types.WindowManager.language = bpy.props.StringProperty(default="en")
     bpy.types.Scene.part_name = bpy.props.StringProperty(name="Part Name")
 
 def unregister():
     bpy.utils.unregister_class(TestPanel)
+    bpy.utils.unregister_class(SetLanguageOperator)
     del bpy.types.WindowManager.language
-
 
 if __name__ == "__main__":
     register()
