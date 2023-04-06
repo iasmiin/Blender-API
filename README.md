@@ -1,6 +1,7 @@
 # Blender-API
 ## Implementing a language selection feature:
 
+### Language selection using dictionary: 
 ```
 # The language selection in this code allows the user to switch between English and Portuguese translations of the text displayed in the user interface of the Blender add-on
 
@@ -75,3 +76,66 @@ def unregister():
 
 if __name__ == "__main__":
     register()
+```
+### Language selection using lists: 
+```
+import bpy
+
+class TestPanel(bpy.types.Panel):
+    bl_label = "Panel"
+    bl_idname = "VIEW3D_PT_TestPanel"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'Panel'
+
+    # English words for the panel
+    ENGLISH_WORDS = [
+        "Import Model", "STL File", "Model Name"
+    ]
+    # Portuguese words for the panel
+    PORTUGUESE_WORDS = [
+        "Importar Modelo", "Arquivo .stl", "Nome do modelo:"
+    ]
+
+    def draw(self, context):
+        layout = self.layout
+        scene = context.scene
+        obj = context.object
+
+        # Language selection buttons
+        row = layout.row()
+        row.prop(scene, "language", expand=True)
+
+        # Get the selected language
+        language = scene.language
+
+        # Set the appropriate words based on the selected language
+        if language == 'ENGLISH':
+            words = self.ENGLISH_WORDS
+        else:
+            words = self.PORTUGUESE_WORDS
+
+        box = layout.box()
+        box.label(text= words[0], icon= 'IMPORT')
+        box.operator("import_mesh.stl", text=words[1])
+
+        layout.separator()
+        
+        box = layout.row()
+        box.label(text=words[2])
+        box.prop(scene, "part_name", text="")
+
+def register():
+    bpy.utils.register_class(TestPanel)
+    bpy.types.Scene.language = bpy.props.EnumProperty(
+        items=[('ENGLISH', "English", ""), ('PORTUGUESE', "Portuguese", "")],
+        name="Language", description="Select the language of the panel")
+    bpy.types.Scene.part_name = bpy.props.StringProperty(name="Part Name")
+
+def unregister():
+    bpy.utils.unregister_class(TestPanel)
+    del bpy.types.Scene.language
+
+if __name__ == "__main__":
+    register()
+
