@@ -43,15 +43,17 @@ class TestPanel(bpy.types.Panel):
 
         layout.separator()
         
-        # Add the language selection buttons
+       # Add the language selection buttons
         # The button checks the current language setting of the WindowManager object and displays the appropriate text for the opposite language
         # When the user clicks the button, it executes an operator wm.set_language that sets the WindowManager.language property to either "en" or "pt"
         row = layout.row()
         if bpy.context.window_manager.language == "en":
             row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "pt"
-        else:
             row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
-
+        else:
+            row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "pt"
+            row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
+            
 # Define a custom operator class for setting the UI language
 class SetLanguageOperator(Operator):
     bl_idname = "wm.set_language"
@@ -77,26 +79,6 @@ def unregister():
 
 if __name__ == "__main__":
     register()
-```
-
-Two language selection buttons:
-```
-    def draw(self, context):
-        
-        ...
-        
-        # Add the language selection buttons
-        # The button checks the current language setting of the WindowManager object and displays the appropriate text for the opposite language
-        # When the user clicks the button, it executes an operator wm.set_language that sets the WindowManager.language property to either "en" or "pt"
-        row = layout.row()
-        if bpy.context.window_manager.language == "en":
-            row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "pt"
-            row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
-        else:
-            row.operator("wm.set_language", text=self.words["Portuguese"][bpy.context.window_manager.language]).language = "pt"
-            row.operator("wm.set_language", text=self.words["English"][bpy.context.window_manager.language]).language = "en"
-            
-        ...
 ```
 
 ### ➛ Language selection using lists
@@ -158,4 +140,3 @@ def unregister():
 
 if __name__ == "__main__":
     register()
-
