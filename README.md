@@ -42,7 +42,7 @@ class TestPanel(bpy.types.Panel):
 
         layout.separator()
         
-       # Add the language selection buttons
+        # Add the language selection buttons
         # The button checks the current language setting of the WindowManager object and displays the appropriate text for the opposite language
         # When the user clicks the button, it executes an operator wm.set_language that sets the WindowManager.language property to either "en" or "pt"
         row = layout.row()
