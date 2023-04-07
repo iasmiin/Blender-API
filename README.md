@@ -17,7 +17,7 @@ bpy.context.scene.collection.children.link(collection)
 
 This script moves all objects from one collection to another:
 ```
-# For two existing collections called Collection_1 and Collection_2:
+# For two existing collections named Collection_1 and Collection_2:
 coll_from = bpy.data.collections['Collection_1'] 
 coll_to = bpy.data.collections['Collection_2']
 
