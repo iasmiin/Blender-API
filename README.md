@@ -1,7 +1,9 @@
 # Blender-API
-## Implementing checkboxes:
+## Importing models:
 
 ```
+# This script loops through files in a specified directory and imports .stl files into the current Blender scene and moves them into a specified collection
+
 import bpy
 import os
 
