@@ -22,7 +22,7 @@ class TestPanel(bpy.types.Panel):
         layout.label(text="Directory Path:")
         layout.prop(scene, "model_path", text="")
         
-        # Button for importing templates
+        # Button for importing models
         layout.operator("import_models.button", text="Import Models")
 
 class ImportModelsOperator(bpy.types.Operator):
