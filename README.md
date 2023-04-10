@@ -20,21 +20,21 @@ class TestPanel(bpy.types.Panel):
         
         # Text input for directory path
         layout.label(text="Directory Path:")
-        layout.prop(scene, "template_path", text="")
+        layout.prop(scene, "model_path", text="")
         
         # Button for importing templates
-        layout.operator("import_templates.button", text="Import Templates")
+        layout.operator("import_models.button", text="Import Models")
 
-class ImportTemplatesOperator(bpy.types.Operator):
-    bl_idname = "import_templates.button"
-    bl_label = "Import Templates"
+class ImportModelsOperator(bpy.types.Operator):
+    bl_idname = "import_models.button"
+    bl_label = "Import Models"
     
     def execute(self, context):
         scene = context.scene
-        template_path = scene.template_path
+        model_path = scene.model_path
         
         # Check if directory exists
-        if not os.path.exists(template_path):
+        if not os.path.exists(model_path):
             self.report({'ERROR'}, "Directory does not exist!")
             return {'CANCELLED'}
         
@@ -46,10 +46,10 @@ class ImportTemplatesOperator(bpy.types.Operator):
             bpy.context.scene.collection.children.link(collection)
         
         # Loop through files in directory and import .stl files
-        for filename in os.listdir(template_path):
-            filepath = os.path.join(template_path, filename)
+        for filename in os.listdir(model_path):
+            filepath = os.path.join(model_path, filename)
             if filename.endswith(".stl") and os.path.isfile(filepath):
-                bpy.ops.import_mesh.stl(filepath=filepath, directory=template_path)
+                bpy.ops.import_mesh.stl(filepath=filepath, directory=model_path)
                 
                 # Move imported object to collection
                 obj = context.selected_objects[0]
@@ -63,13 +63,13 @@ class ImportTemplatesOperator(bpy.types.Operator):
 
 def register():
     bpy.utils.register_class(TestPanel)
-    bpy.utils.register_class(ImportTemplatesOperator)
-    bpy.types.Scene.template_path = bpy.props.StringProperty(name="Template Path", default="")
+    bpy.utils.register_class(ImportModelsOperator)
+    bpy.types.Scene.model_path = bpy.props.StringProperty(name="Model Path", default="")
    
 def unregister():
     bpy.utils.unregister_class(TestPanel)
-    bpy.utils.unregister_class(ImportTemplatesOperator)
-    del bpy.types.Scene.template_path
+    bpy.utils.unregister_class(ImportModelsOperator)
+    del bpy.types.Scene.model_path
 
 if __name__ == "__main__":
     register()
